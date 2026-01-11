@@ -55,6 +55,16 @@ app.get("/api/test-db", async (req, res) => {
 // Auth routes
 app.use("/api/auth", authRoutes);
 
+const authMiddleware = require("./middleware/authMiddleware");
+
+app.get("/api/protected", authMiddleware, (req, res) => {
+  res.json({
+    message: "Access granted",
+    userId: req.userId,
+  });
+});
+
+
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });
