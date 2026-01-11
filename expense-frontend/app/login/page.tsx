@@ -1,0 +1,10 @@
+import LoginForm from '../../src/components/Auth/LoginForm';
+
+export default function LoginPage() {
+  return (
+    <div>
+      <LoginForm />
+    </div>
+  );
+}
+
