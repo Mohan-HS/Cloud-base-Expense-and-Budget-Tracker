@@ -4,6 +4,8 @@ const cors = require('cors');
 
 const pool = require('./db');
 const authRoutes = require("./routes/auth");
+const authMiddleware = require("./middleware/authMiddleware");
+const expenseRoutes = require("./routes/expenses");
 
 const app = express();
 
@@ -55,7 +57,9 @@ app.get("/api/test-db", async (req, res) => {
 // Auth routes
 app.use("/api/auth", authRoutes);
 
-const authMiddleware = require("./middleware/authMiddleware");
+app.use("/api/expenses", expenseRoutes);
+
+
 
 app.get("/api/protected", authMiddleware, (req, res) => {
   res.json({
