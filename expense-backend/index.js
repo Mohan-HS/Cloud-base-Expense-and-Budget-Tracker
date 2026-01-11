@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 
 const pool = require('./db');
-const authRoutes = require('./routes/auth');
+const authRoutes = require("./routes/auth");
 
 const app = express();
 
@@ -51,6 +51,9 @@ app.get("/api/test-db", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// Auth routes
+app.use("/api/auth", authRoutes);
 
 app.listen(5000, () => {
   console.log("Server running on port 5000");
