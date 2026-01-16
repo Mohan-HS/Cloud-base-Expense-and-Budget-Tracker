@@ -1,6 +1,6 @@
 import type { Expense } from "@/types/api";
 
-const API = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API = process.env.NEXT_PUBLIC_API_URL;
 
 /**
  * Get all expenses for logged-in user
