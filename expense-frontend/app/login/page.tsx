@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { apiRequest } from "../../src/lib/api";
+import { apiRequest } from "@/lib/api";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {

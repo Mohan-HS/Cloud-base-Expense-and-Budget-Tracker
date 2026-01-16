@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { signup } from '../services/authService';
-import { isEmailValid, isPasswordValid } from '../utils/validators';
+import { signup } from '@/services/authService';
+import { isEmailValid, isPasswordValid } from '@/utils/validators';
 
 export default function SignupForm() {
   const [name, setName] = useState('');
