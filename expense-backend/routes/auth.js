@@ -28,21 +28,15 @@ router.post("/signup", async (req, res) => {
     const passwordHash = await bcrypt.hash(password, 10);
 
     // insert user
-    const result = await pool.query(
+    await pool.query(
       `INSERT INTO users (name, email, password_hash)
        VALUES ($1, $2, $3)
        RETURNING id`,
       [name, email, passwordHash]
     );
 
-    // jwt
-    const token = jwt.sign(
-      { userId: result.rows[0].id },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
-
-    res.status(201).json({ token });
+    // Return success message - user should login to get JWT token
+    res.status(201).json({ message: "User created successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

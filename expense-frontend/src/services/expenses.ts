@@ -52,11 +52,16 @@ export async function createExpense(
  */
 export async function updateExpense(
   id: number,
-  data: Partial<Omit<Expense, "id" | "user_id" | "created_at">>,
+  data: {
+    title: string;
+    amount: number;
+    category: string;
+    expense_date: string;
+  },
   token: string
 ): Promise<Expense> {
   const res = await fetch(`${API}/api/expenses/${id}`, {
-    method: "PUT",
+    method: "PUT", // keep consistent with backend
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
