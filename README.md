@@ -195,6 +195,7 @@ Response
   "message": "Expense deleted successfully"
 }
 Response
+```
 
 ##
 
