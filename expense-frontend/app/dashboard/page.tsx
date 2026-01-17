@@ -31,7 +31,7 @@ export default function Dashboard() {
         router.push("/login");
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [router]);
 
   if (loading) return <p>Loading expenses...</p>;
 

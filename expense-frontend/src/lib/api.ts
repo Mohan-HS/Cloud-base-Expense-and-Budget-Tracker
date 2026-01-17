@@ -1,5 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 export async function apiRequest<TResponse>(
   endpoint: string,
@@ -15,7 +14,7 @@ export async function apiRequest<TResponse>(
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const res = await fetch(endpoint, {
+  const res = await fetch(`${API_URL}${endpoint}`, {
     method,
     headers,
     body: body ? JSON.stringify(body) : undefined,
@@ -28,4 +27,3 @@ export async function apiRequest<TResponse>(
 
   return res.json();
 }
-
