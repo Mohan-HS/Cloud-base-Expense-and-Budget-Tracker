@@ -191,11 +191,12 @@ Expense
 DELETE /api/expenses/:id
 
 Response
-
 {
   "message": "Expense deleted successfully"
 }
----
+Response
+
+##
 
 
 ### 📸 Screenshots
