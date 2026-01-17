@@ -12,13 +12,21 @@ export default function SignupPage() {
     e.preventDefault();
 
     try {
-      const res = await apiRequest("/api/auth/signup", "POST", form);
-
+      const res = await apiRequest<{ token: string }>(
+        "/api/auth/signup",
+        "POST",
+        form
+      );
+      
       localStorage.setItem("token", res.token);
       router.push("/dashboard");
-    } catch (err: any) {
-      alert(err.message);
-    }
+    } catch (err) {
+      if (err instanceof Error) {
+        alert(err.message);
+      } else {
+        alert("Something went wrong");
+      }
+    }    
   }
 
   return (

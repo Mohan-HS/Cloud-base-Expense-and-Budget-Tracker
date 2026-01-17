@@ -8,11 +8,11 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
   const router = useRouter();
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     try {
-      const res = await apiRequest(
+      const res = await apiRequest<{ token: string }>(
         "/api/auth/login",
         "POST",
         form
@@ -20,15 +20,26 @@ export default function LoginPage() {
 
       localStorage.setItem("token", res.token);
       router.push("/dashboard");
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        alert(err.message);
+      } else {
+        alert("Something went wrong");
+      }
     }
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <input placeholder="Email" onChange={e => setForm({ ...form, email: e.target.value })} />
-      <input type="password" placeholder="Password" onChange={e => setForm({ ...form, password: e.target.value })} />
+      <input
+        placeholder="Email"
+        onChange={(e) => setForm({ ...form, email: e.target.value })}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={(e) => setForm({ ...form, password: e.target.value })}
+      />
       <button type="submit">Login</button>
     </form>
   );
