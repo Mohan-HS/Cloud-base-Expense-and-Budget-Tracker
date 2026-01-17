@@ -208,7 +208,7 @@ Response
 ### Add / Edit Expense
 > Shows the expense form with date handling and edit mode.
 
-![Edit Expense Screenshot](./screenshots/Edit Expense.png)
+![Edit Expense Screenshot](./screenshots/Edit-Expense.png)
 
 
 
