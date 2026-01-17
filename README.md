@@ -196,6 +196,8 @@ Response
   "message": "Expense deleted successfully"
 }
 ---
+
+
 ### 📸 Screenshots
 ### Dashboard – Expense List
 > Shows the list of user expenses with edit and delete actions.
