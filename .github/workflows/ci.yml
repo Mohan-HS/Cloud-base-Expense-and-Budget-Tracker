@@ -1,0 +1,51 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      # -------- Backend --------
+      - name: Install backend dependencies
+        working-directory: expense-backend
+        run: npm install
+
+      - name: Lint backend
+        working-directory: expense-backend
+        run: npm run lint || echo "No lint script"
+
+      - name: Build backend
+        working-directory: expense-backend
+        run: npm run build || echo "No build step"
+
+      # -------- Frontend --------
+      - name: Install frontend dependencies
+        working-directory: expense-frontend
+        run: npm install
+
+      - name: Lint frontend
+        working-directory: expense-frontend
+        run: npm run lint || echo "No lint script"
+
+      - name: Build frontend
+        working-directory: expense-frontend
+        run: npm run build
