@@ -138,11 +138,11 @@ export default function SignupPage() {
       });
 
       router.push("/login");
-    } catch (err: any) {
-      setError(err.message || "Failed to sign up");
+    } catch (err: unknown) {
+      setError((err as Error).message || "Failed to Signup");
     } finally {
       setLoading(false);
-    }
+    }    
   }
 
   const handleGoogleSignIn = () => {
