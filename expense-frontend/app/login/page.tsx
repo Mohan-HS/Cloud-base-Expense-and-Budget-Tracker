@@ -21,11 +21,11 @@ export default function LoginPage() {
 
       localStorage.setItem("token", res.token);
       router.push("/dashboard");
-    } catch (err: any) {
-      setError(err.message || "Failed to login");
+    } catch (err: unknown) {
+      setError((err as Error).message || "Failed to login");
     } finally {
       setLoading(false);
-    }
+    }    
   }
 
   return (
@@ -76,11 +76,12 @@ export default function LoginPage() {
           </form>
 
           <p className="mt-6 text-center text-gray-400 text-sm">
-            Don't have an account?{" "}
-            <Link href="/signup" className="text-white hover:underline">
-              Sign Up
-            </Link>
-          </p>
+  Don&apos;t have an account?{" "}
+  <Link href="/signup" className="text-white hover:underline">
+    Sign Up
+  </Link>
+</p>
+
         </div>
       </div>
     </div>
