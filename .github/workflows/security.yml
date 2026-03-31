@@ -1,0 +1,64 @@
+name: Full OSS Security Pipeline
+
+on:
+  pull_request:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 📥 Checkout
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 🐍 Setup Python (for Semgrep)
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # 🔐 Install Semgrep
+      - name: Install Semgrep
+        run: pip install semgrep
+
+      # 🔐 Run Semgrep (SAST)
+      - name: Run Semgrep
+        run: semgrep scan --config p/security-audit --error
+
+      # 🔑 Secret scanning (Gitleaks)
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+
+      # 📦 Dependency scanning (Trivy)
+      - name: Run Trivy (FS scan)
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          scan-type: fs
+          format: table
+          exit-code: 1
+          severity: CRITICAL,HIGH
+
+      # 🧠 Optional deeper analysis (Infer - Java/C/C++)
+      - name: Install Infer
+        run: |
+          wget https://github.com/facebook/infer/releases/latest/download/infer-linux64-v1.1.0.tar.xz
+          tar -xvf infer-linux64-v1.1.0.tar.xz
+          sudo mv infer-linux64-v1.1.0 /opt/infer
+          echo "/opt/infer/bin" >> $GITHUB_PATH
+
+      - name: Run Infer
+        run: |
+          infer run -- make || true
+
+      # 📊 Upload reports (artifacts)
+      - name: Upload Security Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-reports
+          path: |
+            semgrep.json
+            trivy-report.json
+            gitleaks-report.json
