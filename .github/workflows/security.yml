@@ -34,7 +34,7 @@ jobs:
 
       # 📦 Dependency scanning (Trivy)
       - name: Run Trivy (FS scan)
-        uses: aquasecurity/trivy-action@v4
+        uses: aquasecurity/trivy-action@v0
         with:
           scan-type: fs
           format: table
